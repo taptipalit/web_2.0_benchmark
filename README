@@ -1,0 +1,16 @@
+The Docker containers are defined in docker_db_server/, docker_memcached/, docker_web_server/, and docker_faban_client/ directories. 
+
+The Ansible scripts install.yml and gen_faban_workload.yml installs the Docker containers and sets up the Elgg users for the Elgg benchmark. The Ansible script launch_benchmark.yml launches the benchmark with the specified scale. 
+
+Steps:-
+
+1. Install the Docker containers --
+	ansible-playbook -i ansible-inventory.ini -v install.yml
+
+2. Prepare the benchmark setup by creating the users --
+	ansible-playbook -i ansible-inventory.ini -v gen_faban_workload.yml
+
+3. Launch the benchmark --
+	ansible-playbook -i ansible-inventory.ini -v launch_benchmark.yml
+
+The shell script peak_hunter.sh hunts for the peak throughput using a binary search algorithm, by repeatedly launching the launch_benchmark.yml.
